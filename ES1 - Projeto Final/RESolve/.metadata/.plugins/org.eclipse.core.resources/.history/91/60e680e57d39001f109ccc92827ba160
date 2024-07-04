@@ -1,0 +1,85 @@
+package Model;
+
+import java.util.List;
+
+public class Gerente {
+    private Estoque estoque;
+    private String senha;
+    private Cozinha cozinha;
+    private Bar bar;
+
+    public Gerente(Estoque estoque, Cozinha cozinha, Bar bar, String senha) {
+        this.estoque = estoque;
+        this.cozinha = cozinha;
+        this.bar = bar;
+        this.senha = senha;
+    }
+
+    private boolean autenticar(String senha) {
+        return this.senha.equals(senha);
+    }
+
+    public Prato criarPrato(String nome, double preco, String descricao, List<Ingrediente> ingredientes, String senha) throws IngredienteInsuficienteException, SenhaIncorretaException {
+        if (!autenticar(senha)) {
+            throw new SenhaIncorretaException("Senha incorreta!");
+        }
+
+        Prato prato = new Prato(nome, preco, descricao, estoque, ingredientes);
+        System.out.println("Prato criado: " + nome);
+        return prato;
+    }
+
+    public void removerPrato(Prato prato, String senha) throws SenhaIncorretaException {
+        if (!autenticar(senha)) {
+            throw new SenhaIncorretaException("Senha incorreta!");
+        }
+
+        cozinha.removerPrato(prato);
+        System.out.println("Prato removido: " + prato.getNome());
+    }
+
+    public Bebida criarBebida(String nome, double preco, String descricao, List<ItemEspecialBebida> itensEspeciais, String senha) throws ItemEspecialInsuficienteException, SenhaIncorretaException {
+        if (!autenticar(senha)) {
+            throw new SenhaIncorretaException("Senha incorreta!");
+        }
+
+        Bebida bebida = new Bebida(nome, preco, descricao, estoque, itensEspeciais);
+        System.out.println("Bebida criada: " + nome);
+        return bebida;
+    }
+
+    public void removerBebida(Bebida bebida, String senha) throws SenhaIncorretaException {
+        if (!autenticar(senha)) {
+            throw new SenhaIncorretaException("Senha incorreta!");
+        }
+
+        bar.removerBebida(bebida);
+        System.out.println("Bebida removida: " + bebida.getNome());
+    }
+
+    // Método para listar os pratos disponíveis na cozinha
+    public void listarPratosDisponiveis() {
+        List<Prato> pratos = cozinha.listarPratos();
+        if (pratos.isEmpty()) {
+            System.out.println("Não há pratos disponíveis no momento.");
+        } else {
+            System.out.println("Pratos disponíveis na cozinha:");
+            for (Prato prato : pratos) {
+                System.out.println("- " + prato.getNome());
+            }
+        }
+    }
+
+    // Método para listar as bebidas disponíveis no bar
+    public void listarBebidasDisponiveis() {
+        List<Bebida> bebidas = bar.listarBebidas();
+        if (bebidas.isEmpty()) {
+            System.out.println("Não há bebidas disponíveis no momento.");
+        } else {
+            System.out.println("Bebidas disponíveis no bar:");
+            for (Bebida bebida : bebidas) {
+                System.out.println("- " + bebida.getNome());
+            }
+        }
+    }
+}

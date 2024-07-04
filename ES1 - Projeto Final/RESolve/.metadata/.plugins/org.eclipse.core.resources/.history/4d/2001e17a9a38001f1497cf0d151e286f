@@ -1,0 +1,44 @@
+package Model;
+import Model.*;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Pedido {
+    private static int contadorPedidos = 0;
+    private int numero;
+    private Conta conta;
+    private PratosPedidos pratosPedidos;
+    private List<BebidasPedidos> bebidasPedidos;
+
+    public Pedido(Conta conta) {
+        this.conta = conta;
+        this.numero = ++contadorPedidos;
+        this.pratosPedidos = new PratosPedidos(this);
+        this.bebidasPedidos = new ArrayList<>();
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void addPratoPedido(Prato prato) {
+        pratosPedidos.addPrato(prato);
+    }
+
+    public void addBebidaPedido(BebidasPedidos bebidasPedido) {
+        bebidasPedidos.add(bebidasPedido);
+    }
+
+    public PratosPedidos getPratosPedidos() {
+        return pratosPedidos;
+    }
+
+    public List<BebidasPedidos> getBebidasPedidos() {
+        return bebidasPedidos;
+    }
+
+    public Conta getConta() {
+        return conta;
+    }
+}

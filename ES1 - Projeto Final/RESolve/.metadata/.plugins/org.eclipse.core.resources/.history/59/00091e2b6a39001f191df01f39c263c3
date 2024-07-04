@@ -1,0 +1,74 @@
+package Model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Restaurante {
+    public static void main(String[] args) {
+        Estoque estoque = new Estoque();
+        Cozinha cozinha = new Cozinha();
+
+        // Adicionar ingredientes ao estoque
+        Ingrediente ingrediente1 = new Ingrediente("Tomate", "Tomate fresco", 200, "Gramas");
+        Ingrediente ingrediente2 = new Ingrediente("Queijo", "Queijo mussarela", 500, "Gramas");
+        Ingrediente ingrediente3 = new Ingrediente("Manjericão", "Manjericão fresco", 100, "Gramas");
+        estoque.addIngrediente(ingrediente1);
+        estoque.addIngrediente(ingrediente2);
+        estoque.addIngrediente(ingrediente3);
+
+        // Adicionar itens especiais de bebidas ao estoque
+        ItemEspecialBebida itemEspecial1 = new ItemEspecialBebida("Gelo", "Gelo em cubos", 50, "Cubos");
+        ItemEspecialBebida itemEspecial2 = new ItemEspecialBebida("Limão", "Fatias de limão", 20, "Unidades");
+        estoque.addItemEspecialBebida(itemEspecial1);
+        estoque.addItemEspecialBebida(itemEspecial2);
+
+        // Criar o gerente
+        Gerente gerente = new Gerente(estoque, "senha123");
+
+        // Exemplo de criação de prato
+        List<Ingrediente> ingredientesPizza = new ArrayList<>();
+        ingredientesPizza.add(ingrediente1);
+        ingredientesPizza.add(ingrediente2);
+        ingredientesPizza.add(ingrediente3);
+
+        Prato pratoMargherita = null;
+        try {
+            pratoMargherita = new Prato("Pizza Margherita", 29.99, "Pizza com molho de tomate, queijo e manjericão.", estoque, ingredientesPizza);
+            cozinha.addPrato(pratoMargherita);
+        } catch (IngredienteInsuficienteException e) {
+            System.out.println("Erro ao criar o prato: " + e.getMessage());
+        }
+
+        // Exemplo de criação de bebida
+        List<ItemEspecialBebida> itensBebida = new ArrayList<>();
+        itensBebida.add(itemEspecial1);
+        itensBebida.add(itemEspecial2);
+
+        Bebida cocaCola = null;
+        try {
+            cocaCola = new Bebida("Coca-Cola", 5.99, "Refrigerante de cola.", estoque, null);
+        } catch (ItemEspecialInsuficienteException e) {
+            System.out.println("Erro ao criar a bebida: " + e.getMessage());
+        }
+
+        // Mostrar pratos pedidos na cozinha
+        cozinha.mostrarPratosPedidos();
+
+        // Exemplo de alteração de prato e bebida
+        try {
+            Ingrediente ingredienteExtra = new Ingrediente("Oregano", "Oregano seco", 50, "Gramas");
+            estoque.addIngrediente(ingredienteExtra); // Adiciona o novo ingrediente ao estoque
+            gerente.adicionarIngredienteAoPrato(pratoMargherita, ingredienteExtra, "senha123");
+        } catch (IngredienteInsuficienteException | SenhaIncorretaException e) {
+            System.out.println("Erro ao adicionar ingrediente ao prato: " + e.getMessage());
+        }
+
+        try {
+            ItemEspecialBebida itemExtra = new ItemEspecialBebida("Hortelã", "Folhas de hortelã", 10, "Folhas");
+            estoque.addItemEspecialBebida(itemExtra); // Adiciona o novo item especial ao estoque
+            gerente.adicionarItemEspecialABebida(cocaCola, itemExtra, "senha123");
+        } catch (ItemEspecialInsuficienteException | SenhaIncorretaException e) {
+            System.out.println("Erro ao adicionar item especial à bebida: " + e.getMessage());
+        }
+    }
+}

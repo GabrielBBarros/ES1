@@ -1,0 +1,19 @@
+package Model;
+
+public class VizualizadorEstoque {
+    private Estoque estoque;
+
+    public VizualizadorEstoque(Estoque estoque) {
+        this.estoque = estoque;
+    }
+
+    public void mostrarItensEstoque() {
+        System.out.println("Itens em Estoque:");
+        for (Ingrediente ingrediente : estoque.getIngredientes()) {
+            System.out.println("- " + ingrediente.getNome() + ": " + ingrediente.getDescricao() + " (" + ingrediente.getQuantidade() + " " + ingrediente.getUnidade() + ")");
+        }
+        for (ItemEspecialBebida item : estoque.getItensEspeciaisBebida()) {
+            System.out.println("- " + item.getNome() + ": " + item.getDescricao() + " (" + item.getQuantidade() + " " + item.getUnidade() + ")");
+        }
+    }
+}

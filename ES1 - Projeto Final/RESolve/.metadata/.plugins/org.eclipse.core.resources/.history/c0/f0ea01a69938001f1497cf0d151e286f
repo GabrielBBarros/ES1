@@ -1,0 +1,11 @@
+package Model;
+
+public class BebidasPedidos {
+    private Bebida bebida;
+    private Pedido pedido;
+
+    public BebidasPedidos(Bebida bebida, Pedido pedido) {
+        this.bebida = bebida;
+        this.pedido = pedido;
+    }
+}

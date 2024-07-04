@@ -1,0 +1,11 @@
+package Model;
+
+public class Bebida {
+    private Estoque estoque;
+    private Bar bar;
+
+    public Bebida(Estoque estoque, Bar bar) {
+        this.estoque = estoque;
+        this.bar = bar;
+    }
+}

@@ -1,0 +1,49 @@
+package Model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Prato {
+    private String nome;
+    private double preco;
+    private String descricao;
+    private Estoque estoque;
+    private List<Ingrediente> ingredientes;
+
+    public Prato(String nome, double preco, String descricao, Estoque estoque) {
+        this.nome = nome;
+        this.preco = preco;
+        this.descricao = descricao;
+        this.estoque = estoque;
+        this.ingredientes = new ArrayList<>();
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public List<Ingrediente> getIngredientes() {
+        return ingredientes;
+    }
+    
+    private boolean verificarIngredientes(List<Ingrediente> ingredientes) {
+        Estoque estoque = new Estoque();
+        return estoque.verificarIngredientes(ingredientes);
+    }
+
+    public void addIngrediente(Ingrediente ingrediente) {
+        if (ingrediente != null) {
+            ingredientes.add(ingrediente);
+        } else {
+            throw new IllegalArgumentException("Ingrediente não pode ser nulo.");
+        }
+    }
+}

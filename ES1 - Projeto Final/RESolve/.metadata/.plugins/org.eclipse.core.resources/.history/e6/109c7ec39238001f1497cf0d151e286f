@@ -1,0 +1,11 @@
+package Model;
+
+public class PratosPedidos {
+    private Prato prato;
+    private Pedido pedido;
+
+    public PratosPedidos(Prato prato, Pedido pedido) {
+        this.prato = prato;
+        this.pedido = pedido;
+    }
+}

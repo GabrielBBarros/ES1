@@ -1,0 +1,16 @@
+package Model;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Cozinha {
+    private List<Prato> pratos;
+
+    public Cozinha() {
+        this.pratos = new ArrayList<>();
+    }
+
+    public void addPrato(Prato prato) {
+        pratos.add(prato);
+    }
+}

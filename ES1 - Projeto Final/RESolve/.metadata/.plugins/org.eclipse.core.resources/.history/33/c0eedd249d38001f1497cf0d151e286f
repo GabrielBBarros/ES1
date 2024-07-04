@@ -1,0 +1,22 @@
+package Model;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Estoque {
+    private List<ItemEspecialBebida> itensEspeciaisBebida;
+    private List<Ingrediente> ingredientes;
+
+    public Estoque() {
+        this.itensEspeciaisBebida = new ArrayList<>();
+        this.ingredientes = new ArrayList<>();
+    }
+
+    public void addItemEspecialBebida(ItemEspecialBebida item) {
+        itensEspeciaisBebida.add(item);
+    }
+
+    public void addIngrediente(Ingrediente ingrediente) {
+        ingredientes.add(ingrediente);
+    }
+}

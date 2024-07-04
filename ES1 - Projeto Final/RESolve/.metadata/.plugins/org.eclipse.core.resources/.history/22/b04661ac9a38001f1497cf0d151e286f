@@ -1,0 +1,49 @@
+package Model;
+import Model.*;
+import java.util.List;
+import java.util.ArrayList;
+
+public class Conta {
+    private List<Pedido> pedidos;
+    private Mesa mesa;
+    private String metodoDePagamento;
+
+    public Conta(Mesa mesa) {
+        this.pedidos = new ArrayList<>();
+        this.mesa = mesa;
+    }
+
+    public void addPedido(Pedido pedido) {
+        pedidos.add(pedido);
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public Mesa getMesa() {
+        return mesa;
+    }
+
+    public void setMetodoDePagamento(String metodoDePagamento) {
+        this.metodoDePagamento = metodoDePagamento;
+    }
+
+    public String getMetodoDePagamento() {
+        return metodoDePagamento;
+    }
+
+    public double calcularValorTotal() {
+        double total = 0.0;
+        for (Pedido pedido : pedidos) {
+            for (Prato prato : pedido.getPratosPedidos().getPratos()) {
+                total += prato.getPreco();
+            }
+            for (Bebida bebida : pedido.getBebidasPedidos()) {
+                total += bebida.getPreco();
+            }
+        }
+        return total;
+    }
+
+}

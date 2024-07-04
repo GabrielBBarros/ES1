@@ -1,0 +1,55 @@
+package Model;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Estoque {
+    private List<ItemEspecialBebida> itensEspeciaisBebida;
+    private List<Ingrediente> ingredientes;
+
+    public Estoque() {
+        this.itensEspeciaisBebida = new ArrayList<>();
+        this.ingredientes = new ArrayList<>();
+    }
+
+    public void addItemEspecialBebida(ItemEspecialBebida item) {
+        itensEspeciaisBebida.add(item);
+    }
+
+    public void addIngrediente(Ingrediente ingrediente) {
+        ingredientes.add(ingrediente);
+    }
+    
+    public boolean verificarIngredientes(List<Ingrediente> ingredientes) {
+        for (Ingrediente ingrediente : ingredientes) {
+            if (!verificarIngrediente(ingrediente)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private boolean verificarIngrediente(Ingrediente ingrediente) {
+        for (Ingrediente estoqueIngrediente : ingredientes) {
+            if (estoqueIngrediente.getNome().equals(ingrediente.getNome()) && estoqueIngrediente.getQuantidade() >= ingrediente.getQuantidade()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void usarIngredientes(List<Ingrediente> ingredientes) {
+        for (Ingrediente ingrediente : ingredientes) {
+            for (Ingrediente estoqueIngrediente : this.ingredientes) {
+                if (estoqueIngrediente.getNome().equals(ingrediente.getNome())) {
+                    estoqueIngrediente.setQuantidade(estoqueIngrediente.getQuantidade() - ingrediente.getQuantidade());
+                    break;
+                }
+            }
+        }
+    }
+    
+    //Bebidas
+    
+    
+    
+}

@@ -1,0 +1,48 @@
+package Model;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Mesa {
+    private int numero;
+    private Conta conta;
+    private List<Pedido> pedidos;
+
+    public Mesa(int numero) {
+        this.numero = numero;
+        this.pedidos = new ArrayList<>();
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
+    }
+
+    public Conta getConta() {
+        return conta;
+    }
+
+    public void addPedido(Pedido pedido) {
+        pedidos.add(pedido);
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public boolean verificarSeMesaEstaPaga() {
+        if (conta != null && conta.estaPaga()) {
+            liberarMesa();
+            return true;
+        }
+        return false;
+    }
+
+    private void liberarMesa() {
+        this.conta = null;
+        this.pedidos.clear(); // Limpa a lista de pedidos da mesa
+    }
+}

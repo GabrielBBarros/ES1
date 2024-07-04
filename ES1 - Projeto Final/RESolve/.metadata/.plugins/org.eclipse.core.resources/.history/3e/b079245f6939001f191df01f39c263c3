@@ -1,0 +1,76 @@
+package Model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Estoque {
+    private List<Ingrediente> ingredientes;
+    private List<ItemEspecialBebida> itensEspeciaisBebida;
+
+    public Estoque() {
+        this.ingredientes = new ArrayList<>();
+        this.itensEspeciaisBebida = new ArrayList<>();
+    }
+
+    public void addIngrediente(Ingrediente ingrediente) {
+        ingredientes.add(ingrediente);
+    }
+
+    public void addItemEspecialBebida(ItemEspecialBebida item) {
+        itensEspeciaisBebida.add(item);
+    }
+
+    public boolean verificarIngrediente(Ingrediente ingrediente) {
+        for (Ingrediente i : ingredientes) {
+            if (i.getNome().equalsIgnoreCase(ingrediente.getNome()) && i.getQuantidade() >= ingrediente.getQuantidade()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean verificarItemEspecialBebida(ItemEspecialBebida item) {
+        for (ItemEspecialBebida i : itensEspeciaisBebida) {
+            if (i.getNome().equalsIgnoreCase(item.getNome()) && i.getQuantidade() >= item.getQuantidade()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void retirarIngrediente(Ingrediente ingrediente) {
+        for (Ingrediente i : ingredientes) {
+            if (i.getNome().equalsIgnoreCase(ingrediente.getNome())) {
+                i.setQuantidade(i.getQuantidade() - ingrediente.getQuantidade());
+                break;
+            }
+        }
+    }
+
+    public void retirarItemEspecialBebida(ItemEspecialBebida item) {
+        for (ItemEspecialBebida i : itensEspeciaisBebida) {
+            if (i.getNome().equalsIgnoreCase(item.getNome())) {
+                i.setQuantidade(i.getQuantidade() - item.getQuantidade());
+                break;
+            }
+        }
+    }
+
+    public void reabastecerIngrediente(Ingrediente ingrediente) {
+        for (Ingrediente i : ingredientes) {
+            if (i.getNome().equalsIgnoreCase(ingrediente.getNome())) {
+                i.setQuantidade(i.getQuantidade() + ingrediente.getQuantidade());
+                break;
+            }
+        }
+    }
+
+    public void reabastecerItemEspecialBebida(ItemEspecialBebida item) {
+        for (ItemEspecialBebida i : itensEspeciaisBebida) {
+            if (i.getNome().equalsIgnoreCase(item.getNome())) {
+                i.setQuantidade(i.getQuantidade() + item.getQuantidade());
+                break;
+            }
+        }
+    }
+}

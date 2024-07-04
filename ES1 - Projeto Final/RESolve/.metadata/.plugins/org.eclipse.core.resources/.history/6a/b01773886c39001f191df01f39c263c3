@@ -1,0 +1,23 @@
+package Model;
+
+public class VisualizadorItensFaltantes {
+    private Estoque estoque;
+
+    public VisualizadorItensFaltantes(Estoque estoque) {
+        this.estoque = estoque;
+    }
+
+    public void mostrarItensFaltantes() {
+        System.out.println("Itens Faltantes no Estoque:");
+        for (Ingrediente ingrediente : estoque.getIngredientes()) {
+            if (ingrediente.getQuantidade() <= 0) {
+                System.out.println("- " + ingrediente.getNome() + ": " + ingrediente.getDescricao() + " (" + ingrediente.getQuantidade() + " " + ingrediente.getUnidade() + ")");
+            }
+        }
+        for (ItemEspecialBebida item : estoque.getItensEspeciaisBebida()) {
+            if (item.getQuantidade() <= 0) {
+                System.out.println("- " + item.getNome() + ": " + item.getDescricao() + " (" + item.getQuantidade() + " " + item.getUnidade() + ")");
+            }
+        }
+    }
+}

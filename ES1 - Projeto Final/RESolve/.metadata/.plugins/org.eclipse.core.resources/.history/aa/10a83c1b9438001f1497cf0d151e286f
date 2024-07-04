@@ -1,0 +1,9 @@
+package Model;
+
+public class ItemEspecialBebida {
+    private Estoque estoque;
+
+    public ItemEspecialBebida(Estoque estoque) {
+        this.estoque = estoque;
+    }
+}

@@ -1,0 +1,16 @@
+package Model;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Mesa {
+    private List<Pedido> pedidos;
+
+    public Mesa() {
+        this.pedidos = new ArrayList<>();
+    }
+
+    public void addPedido(Pedido pedido) {
+        pedidos.add(pedido);
+    }
+}

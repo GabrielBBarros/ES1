@@ -1,0 +1,33 @@
+package Model;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Cozinha {
+    private List<Prato> pratos;
+
+    public Cozinha() {
+        this.pratos = new ArrayList<>();
+    }
+
+    public void addPrato(Prato prato) {
+        pratos.add(prato);
+    }
+
+    public void mostrarPratosPedidos() {
+        if (pratos.isEmpty()) {
+            System.out.println("Nenhum prato foi pedido.");
+        } else {
+            for (Prato prato : pratos) {
+                System.out.println("Prato pedido: " + prato.getNome());
+                System.out.println("Descrição: " + prato.getDescricao());
+                System.out.println("Preço: " + prato.getPreco());
+                System.out.println("Ingredientes:");
+                for (Ingrediente ingrediente : prato.getIngredientes()) {
+                    System.out.println("  - " + ingrediente.getNome() + ": " + ingrediente.getQuantidade() + " " + ingrediente.getUnidade());
+                }
+                System.out.println();
+            }
+        }
+    }
+}

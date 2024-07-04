@@ -1,0 +1,120 @@
+package Model;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Estoque {
+    private Map<String, Ingrediente> ingredientes;
+    private Map<String, ItemEspecialBebida> itensEspeciaisBebida;
+
+    public Estoque() {
+        this.ingredientes = new HashMap<>();
+        this.itensEspeciaisBebida = new HashMap<>();
+    }
+
+    public void addIngrediente(Ingrediente ingrediente) {
+        ingredientes.put(ingrediente.getNome(), ingrediente);
+    }
+
+    public void addItemEspecialBebida(ItemEspecialBebida item) {
+        itensEspeciaisBebida.put(item.getNome(), item);
+    }
+    
+    public Map<String, Ingrediente> getIngredientes() {
+        return ingredientes;
+    }
+    
+    public Map<String, ItemEspecialBebida> getItensEspeciaisBebida() {
+        return itensEspeciaisBebida;
+    }
+
+
+
+    public boolean verificarIngredientes(List<Ingrediente> ingredientesNecessarios) {
+        for (Ingrediente ingNecessario : ingredientesNecessarios) {
+            Ingrediente estoqueIngrediente = ingredientes.get(ingNecessario.getNome());
+            if (estoqueIngrediente == null || estoqueIngrediente.getQuantidade() < ingNecessario.getQuantidade()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean verificarItensEspeciais(List<ItemEspecialBebida> itensNecessarios) {
+        for (ItemEspecialBebida itemNecessario : itensNecessarios) {
+            ItemEspecialBebida estoqueItem = itensEspeciaisBebida.get(itemNecessario.getNome());
+            if (estoqueItem == null || estoqueItem.getQuantidade() < itemNecessario.getQuantidade()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void descontarIngredientes(List<Ingrediente> ingredientesNecessarios) throws IngredienteInsuficienteException {
+        if (!verificarIngredientes(ingredientesNecessarios)) {
+            throw new IngredienteInsuficienteException("Ingredientes insuficientes no estoque.");
+        }
+
+        for (Ingrediente ingNecessario : ingredientesNecessarios) {
+            Ingrediente estoqueIngrediente = ingredientes.get(ingNecessario.getNome());
+            estoqueIngrediente.setQuantidade(estoqueIngrediente.getQuantidade() - ingNecessario.getQuantidade());
+        }
+    }
+
+    public void descontarItensEspeciais(List<ItemEspecialBebida> itensNecessarios) throws ItemEspecialInsuficienteException {
+        if (!verificarItensEspeciais(itensNecessarios)) {
+            throw new ItemEspecialInsuficienteException("Itens especiais insuficientes no estoque.");
+        }
+
+        for (ItemEspecialBebida itemNecessario : itensNecessarios) {
+            ItemEspecialBebida estoqueItem = itensEspeciaisBebida.get(itemNecessario.getNome());
+            estoqueItem.setQuantidade(estoqueItem.getQuantidade() - itemNecessario.getQuantidade());
+        }
+    }
+
+    // Novos métodos
+    public boolean verificarIngrediente(Ingrediente ingrediente) {
+        Ingrediente estoqueIngrediente = ingredientes.get(ingrediente.getNome());
+        return estoqueIngrediente != null && estoqueIngrediente.getQuantidade() >= ingrediente.getQuantidade();
+    }
+
+    public void retirarIngrediente(Ingrediente ingrediente) throws IngredienteInsuficienteException {
+        if (!verificarIngrediente(ingrediente)) {
+            throw new IngredienteInsuficienteException("Ingrediente insuficiente no estoque.");
+        }
+        Ingrediente estoqueIngrediente = ingredientes.get(ingrediente.getNome());
+        estoqueIngrediente.setQuantidade(estoqueIngrediente.getQuantidade() - ingrediente.getQuantidade());
+    }
+
+    public void reabastecerIngrediente(Ingrediente ingrediente) {
+        Ingrediente estoqueIngrediente = ingredientes.get(ingrediente.getNome());
+        if (estoqueIngrediente != null) {
+            estoqueIngrediente.setQuantidade(estoqueIngrediente.getQuantidade() + ingrediente.getQuantidade());
+        } else {
+            addIngrediente(ingrediente);
+        }
+    }
+
+    public boolean verificarItemEspecialBebida(ItemEspecialBebida item) {
+        ItemEspecialBebida estoqueItem = itensEspeciaisBebida.get(item.getNome());
+        return estoqueItem != null && estoqueItem.getQuantidade() >= item.getQuantidade();
+    }
+
+    public void retirarItemEspecialBebida(ItemEspecialBebida item) throws ItemEspecialInsuficienteException {
+        if (!verificarItemEspecialBebida(item)) {
+            throw new ItemEspecialInsuficienteException("Item especial insuficiente no estoque.");
+        }
+        ItemEspecialBebida estoqueItem = itensEspeciaisBebida.get(item.getNome());
+        estoqueItem.setQuantidade(estoqueItem.getQuantidade() - item.getQuantidade());
+    }
+
+    public void reabastecerItemEspecialBebida(ItemEspecialBebida item) {
+        ItemEspecialBebida estoqueItem = itensEspeciaisBebida.get(item.getNome());
+        if (estoqueItem != null) {
+            estoqueItem.setQuantidade(estoqueItem.getQuantidade() + item.getQuantidade());
+        } else {
+            addItemEspecialBebida(item);
+        }
+    }
+}

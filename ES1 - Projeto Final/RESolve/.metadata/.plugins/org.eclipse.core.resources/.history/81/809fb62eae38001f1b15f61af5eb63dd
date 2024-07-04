@@ -1,0 +1,61 @@
+package Model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Estoque {
+    private List<Ingrediente> ingredientes;
+    private List<ItemEspecialBebida> itensEspeciais;
+
+    public Estoque() {
+        this.ingredientes = new ArrayList<>();
+        this.itensEspeciais = new ArrayList<>();
+    }
+
+    public void addIngrediente(Ingrediente ingrediente) {
+        ingredientes.add(ingrediente);
+    }
+
+    public void addItemEspecialBebida(ItemEspecialBebida itemEspecial) {
+        itensEspeciais.add(itemEspecial);
+    }
+
+    public boolean temIngredienteSuficiente(Ingrediente ingrediente) {
+        for (Ingrediente ingred : ingredientes) {
+            if (ingred.getNome().equals(ingrediente.getNome()) && ingred.getQuantidade() >= ingrediente.getQuantidade()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean temItemEspecialSuficiente(ItemEspecialBebida itemEspecial) {
+        for (ItemEspecialBebida item : itensEspeciais) {
+            if (item.getNome().equals(itemEspecial.getNome()) && item.getQuantidade() >= itemEspecial.getQuantidade()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void descontarIngrediente(Ingrediente ingrediente, int quantidadeUtilizada) {
+        for (Ingrediente ingred : ingredientes) {
+            if (ingred.getNome().equals(ingrediente.getNome())) {
+                ingred.setQuantidade(ingred.getQuantidade() - quantidadeUtilizada);
+                return;
+            }
+        }
+    }
+
+    public void descontarItemEspecial(ItemEspecialBebida itemEspecial, int quantidadeUtilizada) {
+        for (ItemEspecialBebida item : itensEspeciais) {
+            if (item.getNome().equals(itemEspecial.getNome())) {
+                item.setQuantidade(item.getQuantidade() - quantidadeUtilizada);
+                return;
+            }
+        }
+    }
+}

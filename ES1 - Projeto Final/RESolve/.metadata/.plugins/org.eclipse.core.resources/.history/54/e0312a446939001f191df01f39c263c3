@@ -1,0 +1,60 @@
+package Model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Bebida {
+    private String nome;
+    private double preco;
+    private String descricao; // Adicionei a descrição conforme mencionado
+    private Estoque estoque;
+    private Bar bar;
+    private List<ItemEspecialBebida> itensEspeciais;
+
+    public Bebida(String nome, double preco, String descricao, Estoque estoque, Bar bar, List<ItemEspecialBebida> itensEspeciais) throws ItemEspecialInsuficienteException {
+        this.nome = nome;
+        this.preco = preco;
+        this.descricao = descricao;
+        this.estoque = estoque;
+        this.bar = bar;
+        this.itensEspeciais = new ArrayList<>();
+
+        if (!estoque.verificarItensEspeciais(itensEspeciais)) {
+            throw new ItemEspecialInsuficienteException("Itens especiais insuficientes para a bebida: " + nome);
+        }
+
+        this.itensEspeciais.addAll(itensEspeciais);
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public Estoque getEstoque() {
+        return estoque;
+    }
+
+    public Bar getBar() {
+        return bar;
+    }
+
+    public List<ItemEspecialBebida> getItensEspeciais() {
+        return itensEspeciais;
+    }
+
+    public void addItemEspecialBebida(ItemEspecialBebida itemEspecial) {
+        if (itemEspecial != null) {
+            itensEspeciais.add(itemEspecial);
+        } else {
+            throw new IllegalArgumentException("Item especial não pode ser nulo.");
+        }
+    }
+}

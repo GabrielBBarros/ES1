@@ -1,0 +1,70 @@
+package Model;
+import Model.*;
+public class Gerente {
+    private Estoque estoque;
+    private String senha;
+
+    public Gerente(Estoque estoque, String senha) {
+        this.estoque = estoque;
+        this.senha = senha;
+    }
+
+    private boolean autenticar(String senha) {
+        return this.senha.equals(senha);
+    }
+
+    public void adicionarIngredienteAoPrato(Prato prato, Ingrediente ingrediente, String senha) throws IngredienteInsuficienteException, SenhaIncorretaException {
+        if (!autenticar(senha)) {
+            throw new SenhaIncorretaException("Senha incorreta!");
+        }
+
+        if (estoque.verificarIngrediente(ingrediente)) {
+            prato.addIngrediente(ingrediente);
+            estoque.retirarIngrediente(ingrediente); // Atualiza o estoque
+            System.out.println("Ingrediente adicionado ao prato: " + ingrediente.getNome());
+        } else {
+            throw new IngredienteInsuficienteException("Ingrediente insuficiente no estoque: " + ingrediente.getNome());
+        }
+    }
+
+    public void removerIngredienteDoPrato(Prato prato, Ingrediente ingrediente, String senha) throws SenhaIncorretaException {
+        if (!autenticar(senha)) {
+            throw new SenhaIncorretaException("Senha incorreta!");
+        }
+
+        if (prato.getIngredientes().remove(ingrediente)) {
+            estoque.reabastecerIngrediente(ingrediente); // Atualiza o estoque
+            System.out.println("Ingrediente removido do prato: " + ingrediente.getNome());
+        } else {
+            System.out.println("Ingrediente não encontrado no prato: " + ingrediente.getNome());
+        }
+    }
+
+    public void adicionarItemEspecialABebida(Bebida bebida, ItemEspecialBebida item, String senha) throws ItemEspecialInsuficienteException, SenhaIncorretaException {
+        if (!autenticar(senha)) {
+            throw new SenhaIncorretaException("Senha incorreta!");
+        }
+
+        if (estoque.verificarItemEspecialBebida(item)) {
+            bebida.addItemEspecialBebida(item);
+            estoque.retirarItemEspecialBebida(item); // Atualiza o estoque
+            System.out.println("Item especial adicionado à bebida: " + item.getNome());
+        } else {
+            throw new ItemEspecialInsuficienteException("Item especial insuficiente no estoque: " + item.getNome());
+        }
+    }
+
+    public void removerItemEspecialDaBebida(Bebida bebida, ItemEspecialBebida item, String senha) throws SenhaIncorretaException {
+        if (!autenticar(senha)) {
+            throw new SenhaIncorretaException("Senha incorreta!");
+        }
+
+        if (bebida.getItensEspeciais().remove(item)) {
+            estoque.reabastecerItemEspecialBebida(item); // Atualiza o estoque
+            System.out.println("Item especial removido da bebida: " + item.getNome());
+        } else {
+            System.out.println("Item especial não encontrado na bebida: " + item.getNome());
+        }
+    }
+}
+

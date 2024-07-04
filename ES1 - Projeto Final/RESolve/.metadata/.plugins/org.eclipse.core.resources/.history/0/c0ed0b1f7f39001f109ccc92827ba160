@@ -1,0 +1,153 @@
+package Model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Restaurante {
+    public static void main(String[] args) {
+        Estoque estoque = new Estoque();
+        Cozinha cozinha = new Cozinha();
+        Bar bar = new Bar();
+
+        // Criar ingredientes
+        Ingrediente ingrediente1 = new Ingrediente("Tomate", "Tomate fresco", 2, "Unidades");
+        Ingrediente ingrediente2 = new Ingrediente("Queijo", "Queijo mussarela", 100, "Gramas");
+        Ingrediente ingrediente3 = new Ingrediente("Manjericão", "Manjericão fresco", 50, "Gramas");
+        Ingrediente ingrediente4 = new Ingrediente("Calabresa", "Linguiça Calabresa", 500, "Gramas");
+
+        // Adicionar ingredientes ao estoque
+        estoque.addIngrediente(ingrediente1);
+        estoque.addIngrediente(ingrediente2);
+        estoque.addIngrediente(ingrediente3);
+        estoque.addIngrediente(ingrediente4);
+
+        // Criar itens especiais para bebida
+        ItemEspecialBebida itemEspecial1 = new ItemEspecialBebida("Coca-Cola", "Lata de coca-cola 350ml", 1, "Lata 350ml");
+        ItemEspecialBebida itemEspecial2 = new ItemEspecialBebida("Fanta", "Lata de fanta laranja 350ml", 2, "Lata 350ml");
+
+        // Adicionar itens especiais ao estoque
+        estoque.addItemEspecialBebida(itemEspecial1);
+        estoque.addItemEspecialBebida(itemEspecial2);
+ 
+
+        // Criar Gerente
+        Gerente gerente = new Gerente(estoque, "senhaSegura");
+
+        // Criar um prato
+        List<Ingrediente> ingredientesPizza = new ArrayList<>();
+        ingredientesPizza.add(ingrediente1);
+        ingredientesPizza.add(ingrediente2);
+        ingredientesPizza.add(ingrediente3);
+        
+        System.out.println("\nTentativa criação de prato");
+        Prato prato = null;
+        try {
+            prato = gerente.criarPrato("Pizza Margherita", 29.99, "Pizza com molho de tomate, queijo e manjericão.", ingredientesPizza, "senhaSegura");
+            cozinha.addPrato(prato);
+        } catch (IngredienteInsuficienteException | SenhaIncorretaException e) {
+            System.out.println("Erro ao criar o prato: " + e.getMessage());
+            return; // ou outro tratamento adequado
+        }
+        System.out.println("**************************************");
+        System.out.println("\nTentativa criação de bebida");
+        // Criar uma bebida
+        Bebida bebida = null;
+        List<ItemEspecialBebida> itensEspeciaisBebida = new ArrayList<>();
+        itensEspeciaisBebida.add(itemEspecial1);
+
+        try {
+            bebida = gerente.criarBebida("Coca-Cola", 5.99, "Refrigerante de cola.", itensEspeciaisBebida, "senhaSegura");
+            bar.addBebida(bebida);
+        } catch (ItemEspecialInsuficienteException | SenhaIncorretaException e) {
+            System.out.println("Erro ao criar a bebida: " + e.getMessage());
+            return; // ou outro tratamento adequado
+        }
+        
+        System.out.println("**************************************");
+
+        // Criar mesa, conta e pedido
+        Mesa mesa = new Mesa(1); // Mesa número 1
+        Conta conta = new Conta(mesa);
+        mesa.setConta(conta);
+
+        Pedido pedido = new Pedido(conta);
+
+        pedido.addPratoPedido(prato);
+        pedido.addBebidaPedido(bebida);
+
+        conta.addPedido(pedido);
+        mesa.addPedido(pedido);
+
+        conta.setMetodoDePagamento("Cartão de Crédito");
+
+        System.out.println("**************************************");
+        cozinha.listarPratos();
+
+        // Listar bebidas no bar
+        System.out.println("--------------------------");
+        bar.listarBebidas();
+        System.out.println("**************************************");
+
+        // Impressão dos dados
+        System.out.println("--------------------------");
+        System.out.println("Lista de Pedidos:");
+        for (Pedido p : mesa.getPedidos()) {
+            List<String> detalhesPedido = p.listarDetalhesPedido();
+            for (String detalhe : detalhesPedido) {
+                System.out.println(detalhe);
+            }
+            System.out.println("--------------------------");
+        }
+        System.out.println("Pedidos na conta: " + conta.getPedidos().size());
+        System.out.println("Pratos");
+        for (Pedido p : conta.getPedidos()) {
+            System.out.println("Pedido número: " + p.getNumero());
+            System.out.println("Prato pedido: " + prato.getNome());
+            System.out.println("Descrição do prato: " + prato.getDescricao());
+            System.out.println("Preço do prato: " + prato.getPreco());
+            
+            
+            System.out.println("Bebidas");
+            System.out.println("--------------------------");
+            /*System.out.println("Ingredientes do prato: ");
+             * for (Ingrediente ingrediente : prato.getIngredientes()) {
+                System.out.println("- " + ingrediente.getNome() + ": " + ingrediente.getDescricao() + " (" + ingrediente.getQuantidade() + "g)");
+            }*/
+            System.out.println("Bebida pedido: " + bebida.getNome());
+            System.out.println("Descrição da bebida: " + bebida.getDescricao());
+            System.out.println("Preço da bebida: " + bebida.getPreco());
+            /*System.out.println("Itens especiais da bebida: ");
+            for (ItemEspecialBebida item : bebida.getItensEspeciais()) {
+                System.out.println("- " + item.getNome() + ": " + item.getDescricao() + " " + item.getQuantidade() + "");
+            }*/
+        }
+        System.out.println("Valor total da conta: " + conta.calcularValorTotal());
+        System.out.println("Método de pagamento: " + conta.getMetodoDePagamento());
+
+        
+        System.out.println("--------------------------");
+        System.out.println("Gerente: Retirar bebida ou prato");
+        try {
+            gerente.removerPrato(cozinha, prato, "senhaSegura");
+            gerente.removerBebida(bar, bebida, "senhaSegura");
+        } catch (SenhaIncorretaException e) {
+            System.out.println("Erro ao remover prato ou bebida: " + e.getMessage());
+        }
+        
+        System.out.println("--------------------------");
+        System.out.println("Conta paga");
+        conta.setPaga(true);
+        System.out.print(conta.estaPaga());
+        
+        System.out.println("--------------------------");
+        // Visualizador de itens faltantes
+        VisualizadorItensFaltantes visualizadorItensFaltantes = new VisualizadorItensFaltantes(estoque);
+        visualizadorItensFaltantes.mostrarItensFaltantes();
+
+        System.out.println("--------------------------");
+        // Visualizador de estoque
+        VisualizadorEstoque visualizadorEstoque = new VisualizadorEstoque(estoque);
+        visualizadorEstoque.mostrarItensEstoque();
+        System.out.println("--------------------------");
+    }
+}

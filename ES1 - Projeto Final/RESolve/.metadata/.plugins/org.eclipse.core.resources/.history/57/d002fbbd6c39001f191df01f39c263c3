@@ -1,0 +1,23 @@
+import java.util.Map;
+
+public class VisualizadorEstoque {
+    private Estoque estoque;
+
+    public VisualizadorEstoque(Estoque estoque) {
+        this.estoque = estoque;
+    }
+
+    public void mostrarItensEstoque() {
+        System.out.println("Itens em Estoque:");
+
+        // Iterando sobre os ingredientes no estoque
+        for (Ingrediente ingrediente : estoque.getIngredientes().values()) {
+            System.out.println("- " + ingrediente.getNome() + ": " + ingrediente.getDescricao() + " (" + ingrediente.getQuantidade() + " " + ingrediente.getUnidade() + ")");
+        }
+
+        // Iterando sobre os itens especiais de bebida no estoque
+        for (ItemEspecialBebida item : estoque.getItensEspeciaisBebida().values()) {
+            System.out.println("- " + item.getNome() + ": " + item.getDescricao() + " (" + item.getQuantidade() + " " + item.getUnidade() + ")");
+        }
+    }
+}

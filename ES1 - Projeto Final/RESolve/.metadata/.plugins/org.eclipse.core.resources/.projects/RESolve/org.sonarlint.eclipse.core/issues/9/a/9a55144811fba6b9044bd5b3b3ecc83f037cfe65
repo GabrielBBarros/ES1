@@ -1,0 +1,14 @@
+
+j	java:S106+"9Replace this use of System.out or System.err by a logger.(†œâd8æ–ÃÎ‡2H€RMAJORZ
+CODE_SMELL
+k	java:S1065"9Replace this use of System.out or System.err by a logger.(ÊáøØ8æ–ÃÎ‡2HRMAJORZ
+CODE_SMELL
+Œ
+java:S1192"QDefine a constant instead of duplicating this literal "Senha incorreta!" 4 times.(§¾úıÿÿÿÿ8æ–ÃÎ‡2HúRCRITICALZ
+CODE_SMELL
+p	java:S106""9Replace this use of System.out or System.err by a logger.(°Âèåşÿÿÿÿ8æ–ÃÎ‡2H‚RMAJORZ
+CODE_SMELL
+…	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(á–Ì“HùRMINORZ
+CODE_SMELL
+k	java:S106"9Replace this use of System.out or System.err by a logger.(É›Š8æ–ÃÎ‡2HÿRMAJORZ
+CODE_SMELL

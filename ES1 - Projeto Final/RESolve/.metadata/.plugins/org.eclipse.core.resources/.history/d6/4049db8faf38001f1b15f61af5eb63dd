@@ -1,0 +1,39 @@
+import java.util.List;
+
+public class GestorPratos {
+
+    private Estoque estoque;
+    private Cozinha cozinha;
+
+    public CriadorDePratos(Estoque estoque, Cozinha cozinha) {
+        this.estoque = estoque;
+        this.cozinha = cozinha;
+    }
+
+    public Prato criarPrato(String nome, double preco, String descricao, List<Ingrediente> ingredientes) throws IngredienteInsuficienteException {
+        // Verifica se há ingredientes suficientes no estoque
+        if (!estoque.verificarIngredientes(ingredientes)) {
+            throw new IngredienteInsuficienteException("Ingredientes insuficientes para o prato: " + nome);
+        }
+
+        // Cria o prato e adiciona à cozinha
+        Prato prato = new Prato(nome, preco, descricao, estoque, ingredientes);
+        cozinha.addPrato(prato);
+        System.out.println("Prato criado e adicionado com sucesso: " + nome);
+        return prato;
+    }
+
+    public void deletarPrato(Prato prato) {
+        cozinha.removePrato(prato);
+        System.out.println("Prato deletado com sucesso: " + prato.getNome());
+    }
+
+    public void deletarPratoPorNome(String nomePrato) {
+        Prato prato = cozinha.buscarPratoPorNome(nomePrato);
+        if (prato != null) {
+            deletarPrato(prato);
+        } else {
+            System.out.println("Prato não encontrado: " + nomePrato);
+        }
+    }
+}

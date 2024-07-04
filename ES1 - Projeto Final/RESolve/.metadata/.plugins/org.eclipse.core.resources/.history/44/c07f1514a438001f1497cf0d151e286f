@@ -1,0 +1,55 @@
+package Model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Bebida {
+    private String nome;
+    private double preco;
+    private String descricao;
+    private Estoque estoque;
+    private Bar bar;
+    private List<ItemEspecialBebida> itemespecial;
+
+    public Bebida(String nome, double preco, Estoque estoque, Bar bar) {
+        this.nome = nome;
+        this.preco = preco;
+        this.descricao = descricao;
+        this.estoque = estoque;
+        this.bar = bar;
+        this.itemespecial = new ArrayList<>();
+        
+        if (!estoque.verificarItemespecial(itemespecial)) {
+            throw new ItemEspecialInsuficienteException("Bebida ou itens para bebida insdisponível: " + nome);
+        }
+
+        this.itemespecial.addAll(itemespecial);
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public Estoque getEstoque() {
+        return estoque;
+    }
+
+    public Bar getBar() {
+        return bar;
+    }
+    public List<ItemEspecialBebida> getIngredientes() {
+        return itemespecial;
+    }
+
+    public void addItemEspecialBebida(ItemEspecialBebida itemespecial) {
+        if (ingrediente != null) {
+        	itemespecial.add(itemespecial);
+        } else {
+            throw new IllegalArgumentException("Ingrediente não pode ser nulo.");
+        }
+    }
+}
